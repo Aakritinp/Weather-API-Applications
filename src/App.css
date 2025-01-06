@@ -1,42 +1,135 @@
-#root {
-  max-width: 1280px;
+/* General styles for body and container */
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(
+    to right,
+    #00c6ff,
+    #0072ff
+  ); /* Gradient background */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.App {
+  width: 100%;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
+  animation: fadeIn 1s ease-in-out; /* Animation for fade-in */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Input and button styling */
+input {
+  padding: 12px;
+  margin: 15px 0;
+  width: 80%;
+  max-width: 350px;
+  font-size: 16px;
+  border: 2px solid #0072ff;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-@keyframes logo-spin {
+input:focus {
+  border-color: #00c6ff;
+  box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+}
+
+button {
+  padding: 12px 25px;
+  background-color: #0072ff;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #00c6ff;
+  transform: scale(1.05); /* Slight scale on hover */
+}
+
+button:active {
+  transform: scale(1); /* Button returns to normal size */
+}
+
+/* Weather card display */
+.weather-info {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  animation: slideIn 0.5s ease-in-out; /* Animation for weather display */
+}
+
+.weather-info h3 {
+  font-size: 24px;
+  color: #0072ff;
+}
+
+.weather-info p {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #333;
+}
+
+/* Error message styling */
+.error {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .App {
+    width: 90%;
+    padding: 15px;
+  }
+
+  input {
+    width: 90%;
+  }
+
+  button {
+    width: 90%;
+  }
+
+  .weather-info {
+    padding: 15px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
