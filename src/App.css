@@ -1,88 +1,115 @@
-/* General styles for body and container */
+/* General body styling */
 body {
   font-family: "Arial", sans-serif;
-  background: linear-gradient(
-    to right,
-    #00c6ff,
-    #0072ff
-  ); /* Gradient background */
+  background: url("https://source.unsplash.com/1600x900/?weather,sky") no-repeat
+    center center fixed;
+  background-size: cover;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  color: #06c;
+
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: darken;
 }
 
+/* Main app container */
 .App {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.85); /* Transparent white background */
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   text-align: center;
-  animation: fadeIn 1s ease-in-out; /* Animation for fade-in */
+  animation: fadeIn 1s ease-in-out;
+  backdrop-filter: blur(5px); /* Blur effect for a frosted glass effect */
 }
 
-/* Input and button styling */
+/* Header styles */
+.App h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #0072ff;
+  text-shadow: 0 2px 5px rgba(0, 114, 255, 0.5);
+}
+
+/* Input field styling */
 input {
-  padding: 12px;
+  padding: 12px 15px;
   margin: 15px 0;
   width: 80%;
-  max-width: 350px;
+  max-width: 400px;
   font-size: 16px;
   border: 2px solid #0072ff;
   border-radius: 5px;
   outline: none;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 input:focus {
   border-color: #00c6ff;
-  box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
 }
 
+/* Search button styling */
 button {
   padding: 12px 25px;
-  background-color: #0072ff;
+  background: linear-gradient(to right, #0072ff, #00c6ff);
   color: white;
   font-size: 18px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 80%;
+  max-width: 400px;
 }
 
 button:hover {
-  background-color: #00c6ff;
-  transform: scale(1.05); /* Slight scale on hover */
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  transform: scale(1.05);
 }
 
 button:active {
-  transform: scale(1); /* Button returns to normal size */
+  transform: scale(1);
 }
 
-/* Weather card display */
+/* Weather info card styling */
 .weather-info {
-  background-color: #f4f4f4;
+  background: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
-  animation: slideIn 0.5s ease-in-out; /* Animation for weather display */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease-in-out;
+  backdrop-filter: blur(5px);
 }
 
 .weather-info h3 {
   font-size: 24px;
   color: #0072ff;
+  margin-bottom: 15px;
 }
 
 .weather-info p {
   font-size: 18px;
-  margin: 10px 0;
+  margin: 8px 0;
   color: #333;
+  font-weight: 500;
+}
+
+/* Highlight temperature or key data */
+.weather-info .highlight {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0072ff;
 }
 
 /* Error message styling */
@@ -93,19 +120,28 @@ button:active {
   font-size: 16px;
 }
 
-/* Media Queries for Responsiveness */
+/* Footer for additional information */
+.footer {
+  margin-top: 30px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
   .App {
     width: 90%;
-    padding: 15px;
+    padding: 20px;
   }
 
-  input {
-    width: 90%;
-  }
-
+  input,
   button {
-    width: 90%;
+    width: 100%;
+    max-width: none;
+  }
+
+  h1 {
+    font-size: 2rem;
   }
 
   .weather-info {
@@ -113,7 +149,7 @@ button:active {
   }
 }
 
-/* Animations */
+/* Keyframe Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -125,7 +161,7 @@ button:active {
 
 @keyframes slideIn {
   from {
-    transform: translateY(-20px);
+    transform: translateY(-30px);
     opacity: 0;
   }
   to {

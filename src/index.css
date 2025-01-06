@@ -1,53 +1,67 @@
-/* General body and background styling */
+/* General body styling */
 body {
   font-family: "Arial", sans-serif;
-  background: url("https://source.unsplash.com/1600x900/?clouds,weather")
-    no-repeat center center fixed;
-  background-size: cover; /* Full-screen background image */
+  background: url("https://source.unsplash.com/1600x900/?weather,sky") no-repeat
+    center center fixed;
+  background-size: cover;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full height of the viewport */
-  color: #fff;
+  height: 100vh;
+  color: #06c;
+
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6); /* Overlay to darken background */
+  background-color: rgba(0, 0, 0, 0.6); /* Overlay for better contrast */
+  background-blend-mode: darken;
 }
 
+/* Main app container */
 .App {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.85); /* Transparent white background */
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   text-align: center;
   animation: fadeIn 1s ease-in-out;
+  backdrop-filter: blur(5px); /* Blur effect for a frosted glass effect */
 }
 
-/* Center the input and button components */
+/* Header styles */
+.App h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #0072ff;
+  text-shadow: 0 2px 5px rgba(0, 114, 255, 0.5);
+}
+
+/* Input field styling */
 input {
-  padding: 12px;
+  padding: 12px 15px;
   margin: 15px 0;
   width: 80%;
   max-width: 400px;
   font-size: 16px;
-  border: 2px solid #00c6ff;
+  border: 2px solid #0072ff;
   border-radius: 5px;
   outline: none;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 input:focus {
   border-color: #00c6ff;
-  box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
 }
 
+/* Search button styling */
 button {
   padding: 12px 25px;
-  background-color: #00c6ff;
+  background: linear-gradient(to right, #0072ff, #00c6ff);
   color: white;
   font-size: 18px;
   border: none;
@@ -59,7 +73,7 @@ button {
 }
 
 button:hover {
-  background-color: #0072ff;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
   transform: scale(1.05);
 }
 
@@ -67,29 +81,38 @@ button:active {
   transform: scale(1);
 }
 
-/* Weather info box styling */
+/* Weather info card styling */
 .weather-info {
-  background-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   animation: slideIn 0.5s ease-in-out;
+  backdrop-filter: blur(5px);
 }
 
 .weather-info h3 {
-  font-size: 26px;
+  font-size: 24px;
   color: #0072ff;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .weather-info p {
   font-size: 18px;
-  margin: 10px 0;
+  margin: 8px 0;
   color: #333;
   font-weight: 500;
 }
 
+/* Highlight temperature or key data */
+.weather-info .highlight {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0072ff;
+}
+
+/* Error message styling */
 .error {
   color: #ff4d4d;
   font-weight: bold;
@@ -97,7 +120,36 @@ button:active {
   font-size: 16px;
 }
 
-/* Additional Effects for Smooth Transitions */
+/* Footer for additional information */
+.footer {
+  margin-top: 30px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .App {
+    width: 90%;
+    padding: 20px;
+  }
+
+  input,
+  button {
+    width: 100%;
+    max-width: none;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .weather-info {
+    padding: 15px;
+  }
+}
+
+/* Keyframe Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -115,33 +167,5 @@ button:active {
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-  .App {
-    width: 90%;
-    padding: 20px;
-  }
-
-  input,
-  button {
-    width: 100%;
-    max-width: none;
-  }
-
-  .weather-info {
-    padding: 15px;
-  }
-}
-
-/* Animation for background (Optional) */
-@keyframes backgroundAnimation {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 100% 100%;
   }
 }
