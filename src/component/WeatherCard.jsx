@@ -6,7 +6,7 @@ const WeatherCard = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState("");
 
-  const apiKey = "YOUR_API_KEY"; // Replace with your OpenWeatherMap API key
+  const apiKey = "ea24ec3b6cd89c4c88ca95c231e375af"; // API key
   const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
   // Function to fetch weather data
