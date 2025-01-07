@@ -68,7 +68,7 @@ const Home = () => {
       setForecastData(dailyForecast);
 
       setError("");
-    } catch (err) {
+    } catch {
       setWeatherData(null);
       setForecastData([]);
       setError("Failed to fetch weather for your location.");
