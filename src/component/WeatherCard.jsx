@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./WeatherCard.css";
 
 const WeatherCard = () => {
   const [city, setCity] = useState("");
@@ -7,6 +8,7 @@ const WeatherCard = () => {
   const [forecastData, setForecastData] = useState([]);
   const [unit, setUnit] = useState("metric"); // 'metric' for Celsius, 'imperial' for Fahrenheit
   const [error, setError] = useState("");
+  const [backgroundClass, setBackgroundClass] = useState("");
 
   const apiKey = "5e49276506266acd99f2b9f5ade51e76";
   const weatherUrl = "https://api.openweathermap.org/data/2.5/weather";
@@ -22,7 +24,7 @@ const WeatherCard = () => {
         fetchWeather("Kathmandu"); // Default location
       }
     );
-  }, [unit]);
+  }, []);
 
   const fetchWeather = async (location) => {
     try {
@@ -40,6 +42,9 @@ const WeatherCard = () => {
         item.dt_txt.includes("12:00:00")
       );
       setForecastData(dailyForecast);
+
+      updateBackgroundClass(currentResponse.data.weather[0].main);
+
       setError("");
     } catch (err) {
       setWeatherData(null);
@@ -62,6 +67,9 @@ const WeatherCard = () => {
         item.dt_txt.includes("12:00:00")
       );
       setForecastData(dailyForecast);
+
+      updateBackgroundClass(currentResponse.data.weather[0].main);
+
       setError("");
     } catch (err) {
       setWeatherData(null);
@@ -70,8 +78,29 @@ const WeatherCard = () => {
     }
   };
 
-  const toggleUnit = () => {
-    setUnit(unit === "metric" ? "imperial" : "metric");
+  const toggleUnit = async () => {
+    const newUnit = unit === "metric" ? "imperial" : "metric";
+    setUnit(newUnit);
+    if (city) {
+      fetchWeather(city); // Re-fetch weather for the searched location
+    }
+  };
+
+  const updateBackgroundClass = (weatherCondition) => {
+    const condition = weatherCondition.toLowerCase();
+    if (condition.includes("clear")) {
+      setBackgroundClass("clear-sky");
+    } else if (condition.includes("cloud")) {
+      setBackgroundClass("cloudy");
+    } else if (condition.includes("rain")) {
+      setBackgroundClass("rainy");
+    } else if (condition.includes("snow")) {
+      setBackgroundClass("snowy");
+    } else if (condition.includes("thunderstorm")) {
+      setBackgroundClass("stormy");
+    } else {
+      setBackgroundClass("default-bg");
+    }
   };
 
   const getDayName = (dt_txt) => {
@@ -80,7 +109,7 @@ const WeatherCard = () => {
   };
 
   return (
-    <div className="weather-app">
+    <div className={`weather-app ${backgroundClass}`}>
       <header>
         <h1>Weather App</h1>
       </header>
