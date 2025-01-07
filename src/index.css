@@ -1,171 +1,111 @@
-/* General body styling */
 body {
-  font-family: "Arial", sans-serif;
-  background: url("https://source.unsplash.com/1600x900/?weather,sky") no-repeat
-    center center fixed;
-  background-size: cover;
   margin: 0;
-  padding: 0;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(to bottom, #87ceeb, #ffffff);
+  min-height: 100vh;
+  color: #333;
+}
+
+.weather-app {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #2d87f0;
+  margin-bottom: 20px;
+}
+
+.search-section {
+  margin: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  color: #06c;
-
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.6); /* Overlay for better contrast */
-  background-blend-mode: darken;
+  gap: 10px;
 }
 
-/* Main app container */
-.App {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 40px 30px;
-  background: rgba(255, 255, 255, 0.85); /* Transparent white background */
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
-  backdrop-filter: blur(5px); /* Blur effect for a frosted glass effect */
-}
-
-/* Header styles */
-.App h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  color: #0072ff;
-  text-shadow: 0 2px 5px rgba(0, 114, 255, 0.5);
-}
-
-/* Input field styling */
-input {
-  padding: 12px 15px;
-  margin: 15px 0;
-  width: 80%;
-  max-width: 400px;
+.search-bar {
+  padding: 10px;
   font-size: 16px;
-  border: 2px solid #0072ff;
+  width: 60%;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  outline: none;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9);
 }
 
-input:focus {
-  border-color: #00c6ff;
-  box-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
-}
-
-/* Search button styling */
-button {
-  padding: 12px 25px;
-  background: linear-gradient(to right, #0072ff, #00c6ff);
+.search-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #2d87f0;
   color: white;
-  font-size: 18px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 80%;
-  max-width: 400px;
 }
 
-button:hover {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  transform: scale(1.05);
+.search-button:hover {
+  background-color: #1b5da8;
 }
 
-button:active {
-  transform: scale(1);
+.unit-toggle {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
 }
 
-/* Weather info card styling */
-.weather-info {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 20px;
+.unit-toggle span {
+  margin-right: 5px;
+}
+
+.current-weather-section h2,
+.forecast-section h2 {
+  font-size: 1.8rem;
+  color: #2d87f0;
+  margin-bottom: 10px;
+}
+
+.current-weather {
+  background: white;
   border-radius: 10px;
-  margin-top: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  animation: slideIn 0.5s ease-in-out;
-  backdrop-filter: blur(5px);
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.weather-info h3 {
-  font-size: 24px;
-  color: #0072ff;
-  margin-bottom: 15px;
+.details p {
+  margin: 5px 0;
 }
 
-.weather-info p {
-  font-size: 18px;
-  margin: 8px 0;
-  color: #333;
-  font-weight: 500;
-}
-
-/* Highlight temperature or key data */
-.weather-info .highlight {
-  font-size: 28px;
-  font-weight: bold;
-  color: #0072ff;
-}
-
-/* Error message styling */
-.error {
-  color: #ff4d4d;
-  font-weight: bold;
-  margin-top: 20px;
-  font-size: 16px;
-}
-
-/* Footer for additional information */
-.footer {
+.forecast-section {
   margin-top: 30px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-  .App {
-    width: 90%;
-    padding: 20px;
-  }
-
-  input,
-  button {
-    width: 100%;
-    max-width: none;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .weather-info {
-    padding: 15px;
-  }
+.forecast-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
 }
 
-/* Keyframe Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.forecast-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 18%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(-30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.forecast-card h3 {
+  font-size: 1rem;
+  color: #333;
+}
+
+.forecast-card img {
+  width: 50px;
+  height: 50px;
+}
+
+.forecast-card p {
+  margin: 5px 0;
+  color: #555;
 }

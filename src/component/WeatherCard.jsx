@@ -1,53 +1,147 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const WeatherCard = () => {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
+  const [forecastData, setForecastData] = useState([]);
+  const [unit, setUnit] = useState("metric"); // 'metric' for Celsius, 'imperial' for Fahrenheit
   const [error, setError] = useState("");
 
   const apiKey = "5e49276506266acd99f2b9f5ade51e76";
-  const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
+  const weatherUrl = "https://api.openweathermap.org/data/2.5/weather";
+  const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast";
 
-  // Function to fetch weather data
-  const getWeather = async () => {
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        fetchWeatherByCoords(latitude, longitude);
+      },
+      () => {
+        fetchWeather("Kathmandu"); // Default location
+      }
+    );
+  }, [unit]);
+
+  const fetchWeather = async (location) => {
     try {
-      const response = await axios.get(
-        `${baseUrl}?q=${city}&appid=${apiKey}&units=metric`
+      const currentResponse = await axios.get(
+        `${weatherUrl}?q=${location}&appid=${apiKey}&units=${unit}`
       );
-      setWeatherData(response.data);
+      const forecastResponse = await axios.get(
+        `${forecastUrl}?q=${location}&appid=${apiKey}&units=${unit}`
+      );
+
+      setWeatherData(currentResponse.data);
+      setCity(currentResponse.data.name);
+
+      const dailyForecast = forecastResponse.data.list.filter((item) =>
+        item.dt_txt.includes("12:00:00")
+      );
+      setForecastData(dailyForecast);
       setError("");
-    } catch {
+    } catch (err) {
       setWeatherData(null);
-      setError(
-        "Failed to fetch weather data. Please check the city name or try again later."
-      );
+      setForecastData([]);
+      setError("City not found. Please try again.");
     }
   };
 
-  return (
-    <div className="weather-card">
-      <h2>Weather App</h2>
-      <input
-        type="text"
-        placeholder="Enter city"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-      />
-      <button onClick={getWeather}>Get Weather</button>
+  const fetchWeatherByCoords = async (lat, lon) => {
+    try {
+      const currentResponse = await axios.get(
+        `${weatherUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unit}`
+      );
+      const forecastResponse = await axios.get(
+        `${forecastUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unit}`
+      );
 
-      {error && <p className="error">{error}</p>}
+      setWeatherData(currentResponse.data);
+      const dailyForecast = forecastResponse.data.list.filter((item) =>
+        item.dt_txt.includes("12:00:00")
+      );
+      setForecastData(dailyForecast);
+      setError("");
+    } catch (err) {
+      setWeatherData(null);
+      setForecastData([]);
+      setError("Failed to fetch weather for your location.");
+    }
+  };
+
+  const toggleUnit = () => {
+    setUnit(unit === "metric" ? "imperial" : "metric");
+  };
+
+  const getDayName = (dt_txt) => {
+    const date = new Date(dt_txt);
+    return date.toLocaleDateString("en-US", { weekday: "short" });
+  };
+
+  return (
+    <div className="weather-app">
+      <header>
+        <h1>Weather App</h1>
+      </header>
+      <div className="search-section">
+        <input
+          type="text"
+          placeholder="Enter city"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="search-bar"
+        />
+        <button onClick={() => fetchWeather(city)} className="search-button">
+          Search
+        </button>
+        <div className="unit-toggle">
+          <span>{unit === "metric" ? "°C" : "°F"}</span>
+          <input type="checkbox" onChange={toggleUnit} />
+        </div>
+      </div>
+
+      {error && <p className="error-message">{error}</p>}
 
       {weatherData && (
-        <div className="weather-info">
-          <h3>
-            {weatherData.name}, {weatherData.sys.country}
-          </h3>
-          <p>Temperature: {weatherData.main.temp}°C</p>
-          <p>Weather: {weatherData.weather[0].description}</p>
-          <p>Humidity: {weatherData.main.humidity}%</p>
-          <p>Pressure: {weatherData.main.pressure} hPa</p>
-          <p>Wind Speed: {weatherData.wind.speed} m/s</p>
+        <div className="current-weather-section">
+          <h2>Current Weather</h2>
+          <div className="current-weather">
+            <h3>
+              {weatherData.name}, {weatherData.sys.country}
+            </h3>
+            <h1>{weatherData.main.temp}°</h1>
+            <p>{weatherData.weather[0].description}</p>
+            <div className="details">
+              <p>Feels like: {weatherData.main.feels_like}°</p>
+              <p>Humidity: {weatherData.main.humidity}%</p>
+              <p>
+                Wind: {weatherData.wind.speed}{" "}
+                {unit === "metric" ? "m/s" : "mph"}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {forecastData.length > 0 && (
+        <div className="forecast-section">
+          <h2>Extended Forecast</h2>
+          <div className="forecast-grid">
+            {forecastData.map((day, index) => (
+              <div className="forecast-card" key={index}>
+                <h3>{getDayName(day.dt_txt)}</h3>
+                <img
+                  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                  alt={day.weather[0].description}
+                />
+                <p>
+                  {day.main.temp_min.toFixed(1)}° /{" "}
+                  {day.main.temp_max.toFixed(1)}°
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
