@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaSun, FaCloudSun, FaWind, FaTint, FaSnowflake } from "react-icons/fa";
 import "./WeatherCard.css";
 
 const WeatherCard = () => {
@@ -8,7 +9,6 @@ const WeatherCard = () => {
   const [forecastData, setForecastData] = useState([]);
   const [unit, setUnit] = useState("metric"); // 'metric' for Celsius, 'imperial' for Fahrenheit
   const [error, setError] = useState("");
-  const [backgroundClass, setBackgroundClass] = useState("");
 
   const apiKey = "5e49276506266acd99f2b9f5ade51e76";
   const weatherUrl = "https://api.openweathermap.org/data/2.5/weather";
@@ -21,7 +21,7 @@ const WeatherCard = () => {
         fetchWeatherByCoords(latitude, longitude);
       },
       () => {
-        fetchWeather("Manassas"); // Default location
+        fetchWeather("Kathmandu"); // Default location
       }
     );
   }, []);
@@ -42,8 +42,6 @@ const WeatherCard = () => {
         item.dt_txt.includes("12:00:00")
       );
       setForecastData(dailyForecast);
-
-      updateBackgroundClass(currentResponse.data.weather[0].main);
 
       setError("");
     } catch (err) {
@@ -68,8 +66,6 @@ const WeatherCard = () => {
       );
       setForecastData(dailyForecast);
 
-      updateBackgroundClass(currentResponse.data.weather[0].main);
-
       setError("");
     } catch (err) {
       setWeatherData(null);
@@ -86,35 +82,13 @@ const WeatherCard = () => {
     }
   };
 
-  const updateBackgroundClass = (weatherCondition) => {
-    const condition = weatherCondition.toLowerCase();
-    if (condition.includes("clear")) {
-      setBackgroundClass("clear-sky");
-    } else if (condition.includes("cloud")) {
-      setBackgroundClass("cloudy");
-    } else if (condition.includes("rain")) {
-      setBackgroundClass("rainy");
-    } else if (condition.includes("snow")) {
-      setBackgroundClass("snowy");
-    } else if (condition.includes("thunderstorm")) {
-      setBackgroundClass("stormy");
-    } else {
-      setBackgroundClass("default-bg");
-    }
-  };
-
-  const getDayName = (dt_txt) => {
-    const date = new Date(dt_txt);
-    return date.toLocaleDateString("en-US", { weekday: "short" });
-  };
-
   const convertUnixToTime = (timestamp) => {
     const date = new Date(timestamp * 1000);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   return (
-    <div className={`weather-app ${backgroundClass}`}>
+    <div className="weather-app">
       <header>
         <h1>Weather Forecast</h1>
       </header>
@@ -144,41 +118,49 @@ const WeatherCard = () => {
             <h3>
               {weatherData.name}, {weatherData.sys.country}
             </h3>
-            <h1>{weatherData.main.temp}°</h1>
+            <h1>
+              {weatherData.main.temp}°
+              {/* Conditionally render snowflake icon only if the weather is snowy */}
+              {weatherData.weather[0].description.includes("snow") && (
+                <FaSnowflake style={{ color: "#ffb347" }} />
+              )}
+            </h1>
             <p>{weatherData.weather[0].description}</p>
             <div className="details">
-              <p>Sunrise: {convertUnixToTime(weatherData.sys.sunrise)}</p>
-              <p>Sunset: {convertUnixToTime(weatherData.sys.sunset)}</p>
-              <p>Humidity: {weatherData.main.humidity}%</p>
-              <p>
-                Wind: {weatherData.wind.speed}{" "}
+              <div>
+                <FaSun /> Sunrise: {convertUnixToTime(weatherData.sys.sunrise)}
+              </div>
+              <div>
+                <FaSun /> Sunset: {convertUnixToTime(weatherData.sys.sunset)}
+              </div>
+              <div>
+                <FaTint /> Humidity: {weatherData.main.humidity}%
+              </div>
+              <div>
+                <FaWind /> Wind: {weatherData.wind.speed}{" "}
                 {unit === "metric" ? "m/s" : "mph"}
-              </p>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {forecastData.length > 0 && (
-        <div className="forecast-section">
-          <h2>5-Day Forecast</h2>
-          <div className="forecast-grid">
-            {forecastData.map((day, index) => (
-              <div className="forecast-card" key={index}>
-                <h3>{getDayName(day.dt_txt)}</h3>
-                <img
-                  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                  alt={day.weather[0].description}
-                />
-                <p>
-                  {day.main.temp_min.toFixed(1)}° /{" "}
-                  {day.main.temp_max.toFixed(1)}°
-                </p>
-              </div>
-            ))}
-          </div>
+      <div className="forecast-section">
+        <h2>5-Day Forecast</h2>
+        <div className="forecast-grid">
+          {forecastData.map((day) => (
+            <div className="forecast-card" key={day.dt}>
+              <h3>{convertUnixToTime(day.dt)}</h3>
+              <img
+                src={`http://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
+                alt={day.weather[0].description}
+              />
+              <p>{day.main.temp}°</p>
+              <p>{day.weather[0].description}</p>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
