@@ -1,6 +1,6 @@
 /* Background themes based on weather */
 .clear-sky {
-  background: linear-gradient(to bottom, #fddb3a, #ffb347);
+  background: linear-gradient(to bottom, #4797ff, #4797ff);
   transition: background 0.3s ease;
 }
 
@@ -56,7 +56,7 @@ header h1 {
 .search-bar:focus {
   outline: none;
   border: 1px solid #0c84ed;
-  box-shadow: 0 0 8px rgba(255, 180, 71, 0.6);
+  box-shadow: 0 0 8px rgba(3, 151, 249, 0.6);
 }
 
 .search-button {
@@ -71,7 +71,7 @@ header h1 {
 }
 
 .search-button:hover {
-  background-color: #ffb347;
+  background-color: #4797ff;
   transform: scale(1.05);
 }
 
@@ -103,7 +103,7 @@ header h1 {
 .current-weather h1 {
   font-size: 4rem;
   font-weight: 600;
-  color: #ffb347;
+  color: #0c84ed;
   margin: 10px 0;
 }
 
@@ -189,7 +189,7 @@ body {
 }
 
 .weather-app:hover {
-  background: linear-gradient(to bottom, #ffb347, #fddb3a);
+  background: linear-gradient(to bottom, #8fbefd, #8fbefd);
 }
 
 /* Forecast Section Icons */
