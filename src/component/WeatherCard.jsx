@@ -21,7 +21,7 @@ const WeatherCard = () => {
         fetchWeatherByCoords(latitude, longitude);
       },
       () => {
-        fetchWeather("Kathmandu"); // Default location
+        fetchWeather("Manassas"); // Default location
       }
     );
   }, []);
@@ -108,10 +108,15 @@ const WeatherCard = () => {
     return date.toLocaleDateString("en-US", { weekday: "short" });
   };
 
+  const convertUnixToTime = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
+
   return (
     <div className={`weather-app ${backgroundClass}`}>
       <header>
-        <h1>Weather App</h1>
+        <h1>Weather Forecast</h1>
       </header>
       <div className="search-section">
         <input
@@ -134,7 +139,7 @@ const WeatherCard = () => {
 
       {weatherData && (
         <div className="current-weather-section">
-          <h2>Current Weather</h2>
+          <h2>Current Location</h2>
           <div className="current-weather">
             <h3>
               {weatherData.name}, {weatherData.sys.country}
@@ -142,7 +147,8 @@ const WeatherCard = () => {
             <h1>{weatherData.main.temp}°</h1>
             <p>{weatherData.weather[0].description}</p>
             <div className="details">
-              <p>Feels like: {weatherData.main.feels_like}°</p>
+              <p>Sunrise: {convertUnixToTime(weatherData.sys.sunrise)}</p>
+              <p>Sunset: {convertUnixToTime(weatherData.sys.sunset)}</p>
               <p>Humidity: {weatherData.main.humidity}%</p>
               <p>
                 Wind: {weatherData.wind.speed}{" "}
@@ -155,7 +161,7 @@ const WeatherCard = () => {
 
       {forecastData.length > 0 && (
         <div className="forecast-section">
-          <h2>Extended Forecast</h2>
+          <h2>5-Day Forecast</h2>
           <div className="forecast-grid">
             {forecastData.map((day, index) => (
               <div className="forecast-card" key={index}>
