@@ -1,9 +1,9 @@
-import WeatherCard from "./component/WeatherCard.jsx";
+import Home from "./component/Home.jsx";
 
 function App() {
   return (
-    <div className="App">
-      <WeatherCard />
+    <div>
+      <Home />
     </div>
   );
 }

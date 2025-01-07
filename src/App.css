@@ -1,171 +1,181 @@
-/* General body styling */
+/* General Styles */
 body {
-  font-family: "Arial", sans-serif;
-  background: url("https://source.unsplash.com/1600x900/?weather,sky") no-repeat
-    center center fixed;
-  background-size: cover;
   margin: 0;
-  padding: 0;
+  font-family: "Arial", sans-serif;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.weather-app {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 15px;
+  background: url("https://img.freepik.com/premium-photo/tropical-beach-with-palm-trees-sunset_849761-2649.jpg")
+    no-repeat center center/cover;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.search-section {
+  margin: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  color: #06c;
-
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  background-blend-mode: darken;
+  gap: 20px;
 }
 
-/* Main app container */
-.App {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 40px 30px;
-  background: rgba(255, 255, 255, 0.85); /* Transparent white background */
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  animation: fadeIn 1s ease-in-out;
-  backdrop-filter: blur(5px); /* Blur effect for a frosted glass effect */
-}
-
-/* Header styles */
-.App h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  color: #0072ff;
-  text-shadow: 0 2px 5px rgba(0, 114, 255, 0.5);
-}
-
-/* Input field styling */
-input {
-  padding: 12px 15px;
-  margin: 15px 0;
-  width: 80%;
-  max-width: 400px;
+.search-bar {
+  padding: 12px;
   font-size: 16px;
-  border: 2px solid #0072ff;
+  width: 60%;
+  border: 1px solid #ccc;
   border-radius: 5px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
   outline: none;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ffb347;
+  box-shadow: 0 0 8px rgba(255, 180, 71, 0.6);
 }
 
-input:focus {
-  border-color: #00c6ff;
-  box-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
-}
-
-/* Search button styling */
-button {
-  padding: 12px 25px;
-  background: linear-gradient(to right, #0072ff, #00c6ff);
+.search-button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #333;
   color: white;
-  font-size: 18px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 80%;
-  max-width: 400px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-button:hover {
-  background: linear-gradient(to right, #00c6ff, #0072ff);
-  transform: scale(1.05);
+.search-button:hover {
+  background-color: #555;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-button:active {
-  transform: scale(1);
+.unit-toggle {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  color: #fff;
 }
 
-/* Weather info card styling */
-.weather-info {
-  background: rgba(255, 255, 255, 0.9);
+.unit-toggle span {
+  margin-right: 5px;
+}
+
+.current-weather-section {
+  margin: 20px 0;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
-  margin-top: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  animation: slideIn 0.5s ease-in-out;
-  backdrop-filter: blur(5px);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.weather-info h3 {
-  font-size: 24px;
-  color: #0072ff;
-  margin-bottom: 15px;
+.current-weather {
+  text-align: center;
 }
 
-.weather-info p {
-  font-size: 18px;
-  margin: 8px 0;
+.current-weather h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
   color: #333;
-  font-weight: 500;
 }
 
-/* Highlight temperature or key data */
-.weather-info .highlight {
-  font-size: 28px;
+.current-weather h1 {
+  font-size: 4rem;
+  font-weight: 600;
+  color: #ffb347;
+  margin: 10px 0;
+}
+
+.current-weather p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.details div {
+  font-size: 1rem;
+  margin: 5px 0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.details div svg {
+  color: #ffb347;
+}
+
+/* Forecast Section */
+.forecast-section {
+  margin: 40px 0;
+}
+
+.forecast-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.forecast-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.forecast-card {
+  width: 18%;
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.forecast-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.forecast-card img {
+  width: 50px;
+  height: 50px;
+  margin: 5px 0;
+}
+
+.forecast-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 1rem;
+  margin: 10px 0;
   font-weight: bold;
-  color: #0072ff;
-}
-
-/* Error message styling */
-.error {
-  color: #ff4d4d;
-  font-weight: bold;
-  margin-top: 20px;
-  font-size: 16px;
-}
-
-/* Footer for additional information */
-.footer {
-  margin-top: 30px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-  .App {
-    width: 90%;
-    padding: 20px;
-  }
-
-  input,
-  button {
-    width: 100%;
-    max-width: none;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .weather-info {
-    padding: 15px;
-  }
-}
-
-/* Keyframe Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
