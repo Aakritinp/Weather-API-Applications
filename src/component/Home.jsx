@@ -22,7 +22,7 @@ const Home = () => {
         fetchWeatherByCoords(latitude, longitude);
       },
       () => {
-        fetchWeather("Manassas"); // Default location
+        fetchWeather("Manassas");
       }
     );
   }, []);
